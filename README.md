@@ -8,4 +8,4 @@ The workshop notebook can be accessed [online through Google Colab here](https:/
 
 
 ---
-**Credit:** Most of the materials in this workshop were originally developed for the [R Fundamentals workshop series from NUIT RCDS](https://github.com/nuitrcs/R-fundamentals-summer-workshop/tree/main) (specifically Day 4).  
+**Credit:** Most of the materials in this workshop were originally developed for the [R Fundamentals workshop series from NUIT RCDS](https://github.com/nuitrcs/R-fundamentals-summer-workshop/tree/main) (specifically Day 4) by [Ritika Giri](https://www.it.northwestern.edu/departments/it-services-support/research/staff/giri.html).  

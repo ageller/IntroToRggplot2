@@ -337,7 +337,7 @@ Color the points in the Orange data by the `Tree` column, and change the size of
 
 # 5. Themes
 
-`ggplot2` has many guilt in styles, aka themes, for plotting that define things like the background color, axis style, grid lines, etc.  [Here is a list of available themes.](https://ggplot2.tidyverse.org/reference/ggtheme.html)  Themes can also be [customized](https://rpubs.com/mclaire19/ggplot2-custom-themes), allowing for a myriad of [possibilities](https://ggplot2.tidyverse.org/reference/theme.html).
+`ggplot2` has many built in styles, aka themes, for plotting that define things like the background color, axis style, grid lines, etc.  [Here is a list of available themes.](https://ggplot2.tidyverse.org/reference/ggtheme.html)  Themes can also be [customized](https://rpubs.com/mclaire19/ggplot2-custom-themes), allowing for a myriad of [possibilities](https://ggplot2.tidyverse.org/reference/theme.html).
 
 Let's explore a few of the built in themes.
 

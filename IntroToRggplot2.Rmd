@@ -136,36 +136,25 @@ Load the `Orange` (built-in) dataset in your workspace, which contains data on t
 
 Make a scatterplot of tree age vs. circumference.
 
+```{r}
+# load in the Orange tree data
+data(Orange)
+
+# uncomment the following line to inspect the data
+# head(Orange)
+
+# write code to make a scatterplot of tree age vs. circumference
+```
+
 ## 2 Customizing the axis limits
 
 The X and Y axis limits can be controlled in 3 ways.
 
 ### 2.1 Method 1 : By deleting the points outside the range
 
-This can be done by `xlim()` and `ylim()`. You can pass a numeric vector of length 2 (with max and min values) or just the max and min values themselves.
+This can be done by `scale_x_continuous()` (or the shorthand `xlim()`) and `scale_y_continuous()` (or the shorthand `ylim()`). You can pass a numeric vector of length 2 (with max and min values) or just the max and min values themselves.
 
-*Note:* This will change lines of best fit or smoothing that you may have added via `ggplot` (as compared to lines fit to the full dataset).  In some cases, this feature might come in handy, e.g. when you wish to know how the line of best fit would change when some extreme values (or outliers) are removed.  We will cover these fit lines later.
-
-```{r}
-ggplot(midwest, aes(x=area, y=poptotal)) + # note that we can include aes in this ggplot call
-    geom_point() + 
-    xlim(c(0, 0.1)) + # deletes points
-    ylim(c(0, 1000000))   # deletes points
-```
-
-### 2.2 Method 2 : Zooming In
-
-The other method to adjust the X and Y axis is to zoom in to the region of interest *without* deleting the points. This is done using `coord_cartesian()`.
-
-```{r}
-ggplot(midwest, aes(x=area, y=poptotal)) + 
-    geom_point() + 
-    coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000))  # zooms in
-```
-
-### 2.3 Method 3 : Using the scales layer
-
-Scales in `ggplot2` control the mapping from data to aesthetics. They take your data and turn it into something that you can see, like size, color, position or shape. They also provide the tools that let you interpret the plot: the axes and legends. You can generate plots with `ggplot2` without knowing how scales work, but understanding scales and learning how to manipulate them will give you much more control. To get an in-depth understanding of how scales work in `ggplot2` see [this book chapter on scales and guides](https://ggplot2-book.org/scales-guides).
+Here we are using "scales".  Scales in `ggplot2` control the mapping from data to aesthetics. They take your data and turn it into something that you can see, like size, color, position or shape. They also provide the tools that let you interpret the plot: the axes and legends. You can generate plots with `ggplot2` without knowing how scales work, but understanding scales and learning how to manipulate them will give you much more control. To get an in-depth understanding of how scales work in `ggplot2` see [this book chapter on scales and guides](https://ggplot2-book.org/scales-guides).
 
 An important property of `ggplot2` is the principle that every aesthetic in your plot is associated with exactly one scale. For instance, when you write this (as we've done above):
 
@@ -184,21 +173,40 @@ ggplot(midwest, aes(x=area, y=poptotal)) +
     scale_y_continuous() 
 ```
 
+*Note:* This will change lines of best fit or smoothing that you may have added via `ggplot` (as compared to lines fit to the full dataset).  In some cases, this feature might come in handy, e.g. when you wish to know how the line of best fit would change when some extreme values (or outliers) are removed.  We will cover these fit lines later.
+
 Inside the `scale` layer, you can add limits as:
 
 ```{r}
-
 ggplot(midwest, aes(x=area, y=poptotal)) + 
     geom_point() +
-    scale_x_continuous(limits=c(0, 0.1)) + 
-    scale_y_continuous(limits=c(0, 1000000))
+    scale_x_continuous(limits=c(0, 0.1)) + # deletes points
+    scale_y_continuous(limits=c(0, 1000000)) # deletes points
 ```
-
-Scales maps from the data-points to the aesthetics, it does not delete data-points, rather it zooms in similar to `coord_cartesian()` .
 
 *Pro tip*: I personally do not like that `ggplot` expands beyond the limits I set.  You can force it not to do so (or define explicitly how much expansion to apply) by setting the `expand` keyword within `scale_x_continous` and/or `scale_y_continous`, e.g., `scale_x_continuous(limits=c(0, 0.1), expand=c(0,0))`.
 
 Position scales have many more features that you can [explore](https://ggplot2-book.org/scales-position).
+
+You can accomplish the same result with the shorthand `xlim` and `ylim` :
+
+```{r}
+ggplot(midwest, aes(x=area, y=poptotal)) + # note that we can include aes in this ggplot call
+    geom_point() + 
+    xlim(c(0, 0.1)) + # deletes points
+    ylim(c(0, 1000000))   # deletes points
+```
+
+### 2.2 Method 2 : Zooming In
+
+The other method to adjust the X and Y axis is to zoom in to the region of interest *without* deleting the points. This is done using `coord_cartesian()`.
+
+```{r}
+ggplot(midwest, aes(x=area, y=poptotal)) + 
+    geom_point() + 
+    coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000))  # zooms in
+```
+
 
 ### EXERCISE 2
 
@@ -333,7 +341,7 @@ Use care when when selecting colors for your visualizations, and take care to ma
 
 ### EXERCISE 4
 
-Color the points in the Orange data by the `Tree` column, and change the size of the points.
+Color the points in the Orange data by the `Tree` column, and change the size of the points to a constant value.
 
 # 5. Themes
 
@@ -392,8 +400,7 @@ gg_orange + geom_smooth(method="lm")  # set se=FALSE to turnoff confidence bands
 
 The line of best fit is in blue, and the confidence bands are shown in gray. 
 
-*Note:* The fit can change based on how you Zoom into the plot. If you adjust the axis limits by zooming in (e.g., using `coord_cartesian()` or `scale_x_continous()`), this should not change the fit.  However, if you use `xlim()` and `ylim()`, you will delete points, and that will change the fit. 
-
+*Note:* The fit can change based on how you Zoom into the plot. If you adjust the axis limits by zooming in (e.g., using `coord_cartesian()` ), this should not change the fit.  However, if you use `xlim()` and `ylim()` or `scale_x_continous()` and or `scale_y_continous()`, you will delete points, and that will change the fit. 
 ```{r}
 # Zoom in on the x axis without deleting points (does not change the fit)
 gg_orange + 
